@@ -26,8 +26,13 @@ module Api
       # POST /coins
       # POST /coins.json
       def create
-        @coin = Coin.new(coin_params)      
-      end
+				coin = Coin.new(coin_params)
+				if coin.save
+					render json: {status: 'SUCCESS', message:'Saved coin', data:coin},status: :ok
+				else
+					render json: {status: 'ERROR', message:'coins not saved', data:coin.erros},status: :unprocessable_entity
+				end
+			end
     
       # PATCH/PUT /coins/1
       # PATCH/PUT /coins/1.json
